@@ -8,15 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
-    var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, World!")
-        }
-        .padding()
-    }
+    @State private var number: Int = Int.random(in: 1...100)
+    @State private var correctAns = 0
+    @State private var wrongAns = 0
+    @State private var attempts = 0
+    @State private var showAlert = false
+    @State private var isCorrect: Bool? = nil
+    @State private var timer: Timer? = nil
 }
 
 #Preview {
