@@ -18,23 +18,54 @@ struct ContentView: View {
     
 
     var body: some View {
-        VStack {
-            Text("\(primeNum)")
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [.red, .green]), startPoint: .top, endPoint: .bottom)
+                .edgesIgnoringSafeArea(.all)
             
-            HStack {
-                Button("Prime") {
-                    checkAns(isPrime: true)
+            VStack(spacing: 30) {
+                Text("\(primeNum)")
+                    .font(.system(size: 80, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .padding()
+                    .shadow(radius: 10)
+                
+                HStack(spacing: 40) {
+                    Button(action: { checkAns(isPrime: true) }) {
+                        Text("Prime")
+                            .font(.title2)
+                            .padding()
+                            .frame(width: 150, height: 60)
+                            .background(Color.green)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                            .shadow(radius: 5)
+                    }
+                    
+                    Button(action: { checkAns(isPrime: false) }) {
+                        Text("Not Prime")
+                            .font(.title2)
+                            .padding()
+                            .frame(width: 150, height: 60)
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+                            .shadow(radius: 5)
+                    }
                 }
                 
-                Button("Not Prime") {
-                    checkAns(isPrime: false)
+                if let correct = isCorrect {
+                    Image(systemName: correct ? "checkmark.circle.fill" : "xmark.circle.fill")
+                        .resizable()
+                        .frame(width: 80, height: 80)
+                        .foregroundColor(correct ? .green : .red)
+                        .transition(.scale)
                 }
+                
+                Text("Correct: \(correctAns) | Wrong: \(wrongAns)")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .padding()
             }
-            
-            if let correct = isCorrect {
-                Text(correct ? "✅ Correct" : "❌ Wrong")
-            }
-            Text("Correct: \(correctAns) | Wrong: \(wrongAns)")
         }
         .alert("Finshed!", isPresented: $showAlert){
             Button("play again"){
