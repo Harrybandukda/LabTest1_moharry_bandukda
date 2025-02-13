@@ -8,28 +8,47 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var number: Int = Int.random(in: 1...100)
-    @State private var correctAns = 0
-    @State private var wrongAns = 0
-    @State private var attempts = 0
-    @State private var showAlert = false
+    @State private var primeNum: Int = Int.random(in: 1...100)
     @State private var isCorrect: Bool? = nil
-    @State private var timer: Timer? = nil
-    
+
     var body: some View {
-            VStack {
-                Text("\(number)")
-                
-                HStack {
-                    Button("Prime") {
-                    }
-                    
-                    Button("Not Prime") {
-                    }
+        VStack {
+            Text("\(primeNum)")
+            
+            HStack {
+                Button("Prime") {
+                    checkAns(isPrime: true)
                 }
+                
+                Button("Not Prime") {
+                    checkAns(isPrime: false)
+                }
+            }
+            
+            if let correct = isCorrect {
+                Text(correct ? "✅ Correct" : "❌ Wrong")
             }
         }
     }
+
+    func checkAns(isPrime: Bool) {
+        let correctAnswer = isPrimeNumber(primeNum)
+        isCorrect = (correctAnswer == isPrime)
+        nextNum()
+    }
+
+    func nextNum() {
+        primeNum = Int.random(in: 1...100)
+    }
+
+    func isPrimeNumber(_ num: Int) -> Bool {
+        if num < 2 { return false }
+        for i in 2..<num {
+            if num % i == 0 { return false }
+        }
+        return true
+    }
+}
 
 #Preview {
     ContentView()
