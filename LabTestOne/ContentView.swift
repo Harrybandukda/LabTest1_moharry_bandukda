@@ -12,8 +12,11 @@ struct ContentView: View {
     @State private var isCorrect: Bool? = nil
     @State private var correctAns = 0
     @State private var wrongAns = 0
+    @State private var attempts = 0
+    @State private var showAlert = false
     
-
+    
+    
     var body: some View {
         VStack {
             Text("\(primeNum)")
@@ -33,8 +36,15 @@ struct ContentView: View {
             }
             Text("Correct: \(correctAns) | Wrong: \(wrongAns)")
         }
+        .alert("Finshed!", isPresented: $showAlert){
+            Button("play again"){
+                playAgain()
+            }
+        } message: {
+            Text("Correct: \(correctAns)\nWrong: \(wrongAns)")
+        }
     }
-
+    
     func checkAns(isPrime: Bool) {
         let correctAnswer = isPrimeNumber(primeNum)
         
@@ -45,14 +55,25 @@ struct ContentView: View {
             wrongAns += 1
             isCorrect = false
         }
-
-        nextNum()
+        attempts += 1
+        if attempts >= 10 {
+            showAlert = true
+        } else {
+            nextNum()
+        }
     }
-
+    
     func nextNum() {
         primeNum = Int.random(in: 1...100)
     }
-
+    
+    func playAgain() {
+        correctAns = 0
+        wrongAns = 0
+        attempts = 0
+        nextNum()
+    }
+    
     func isPrimeNumber(_ num: Int) -> Bool {
         if num < 2 { return false }
         for i in 2..<num {
@@ -60,8 +81,8 @@ struct ContentView: View {
         }
         return true
     }
+    
 }
-
 #Preview {
     ContentView()
 }
