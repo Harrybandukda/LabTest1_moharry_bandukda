@@ -10,6 +10,9 @@ import SwiftUI
 struct ContentView: View {
     @State private var primeNum: Int = Int.random(in: 1...100)
     @State private var isCorrect: Bool? = nil
+    @State private var correctAns = 0
+    @State private var wrongAns = 0
+    
 
     var body: some View {
         VStack {
@@ -28,12 +31,21 @@ struct ContentView: View {
             if let correct = isCorrect {
                 Text(correct ? "✅ Correct" : "❌ Wrong")
             }
+            Text("Correct: \(correctAns) | Wrong: \(wrongAns)")
         }
     }
 
     func checkAns(isPrime: Bool) {
         let correctAnswer = isPrimeNumber(primeNum)
-        isCorrect = (correctAnswer == isPrime)
+        
+        if correctAnswer == isPrime {
+            correctAns += 1
+            isCorrect = true
+        } else {
+            wrongAns += 1
+            isCorrect = false
+        }
+
         nextNum()
     }
 
