@@ -15,7 +15,21 @@ struct ContentView: View {
     @State private var showAlert = false
     @State private var isCorrect: Bool? = nil
     @State private var timer: Timer? = nil
-}
+    
+    var body: some View {
+            VStack {
+                Text("\(number)")
+                
+                HStack {
+                    Button("Prime") {
+                    }
+                    
+                    Button("Not Prime") {
+                    }
+                }
+            }
+        }
+    }
 
 #Preview {
     ContentView()
