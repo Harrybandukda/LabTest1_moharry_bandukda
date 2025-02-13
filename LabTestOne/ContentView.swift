@@ -14,9 +14,9 @@ struct ContentView: View {
     @State private var wrongAns = 0
     @State private var attempts = 0
     @State private var showAlert = false
+    @State private var timer: Timer? = nil
     
-    
-    
+
     var body: some View {
         VStack {
             Text("\(primeNum)")
@@ -42,6 +42,14 @@ struct ContentView: View {
             }
         } message: {
             Text("Correct: \(correctAns)\nWrong: \(wrongAns)")
+        }
+        .onAppear(perform: startTimer)
+    }
+    
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
+            wrongAns += 1
+            nextNum()
         }
     }
     
