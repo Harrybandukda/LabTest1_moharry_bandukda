@@ -72,11 +72,12 @@ struct ContentView: View {
                 playAgain()
             }
         } message: {
-            Text("Correct: \(correctAns)\nWrong: \(wrongAns)")
+            Text("Correct: \(correctAns)\nWrong: \(wrongAns)") // Dialg for result
         }
         .onAppear(perform: startTimer)
     }
     
+    // Timer (5 Sec)
     func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
             wrongAns += 1
@@ -106,6 +107,7 @@ struct ContentView: View {
         primeNum = Int.random(in: 1...100)
     }
     
+    // play again bytton
     func playAgain() {
         correctAns = 0
         wrongAns = 0
